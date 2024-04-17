@@ -5,7 +5,7 @@ app = FastAPI()
 
 @app.get("/home")
 def HelloWorld():
-    return "This is home page"
+    return "home page"
 
 
 
@@ -14,9 +14,21 @@ def about():
     return "Hi i am software engineer with a keen interest in AI"
 
 
-@app.post("/contact/ {id}")
-def contactUs(id:int):
-    return id
+@app.get("/contact/{id}")
+def contactUs(id):
+    return {"The id enter by the user ": id}
+
+@app.post("/Login")
+def login(username: str , password: int ):
+    result = {"userName": username, "password": password}
+    return result
+
+@app.post("/sum")
+def sum(num1:int, num2:int):
+    result = num1+num2
+    return result
+
+
 
 
 
