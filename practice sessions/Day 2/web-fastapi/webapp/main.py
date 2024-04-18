@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 import uvicorn
+
 app = FastAPI()
 
 
@@ -29,6 +30,44 @@ def sum(num1:int, num2:int):
     return result
 
 
+
+
+
+students = []
+
+@app.post("/students")
+def create_students(name:str, age:int, grade:str):
+    student_id = len(students)+1
+    newStudents = {
+        "student_id":student_id,
+        "name": name,
+        "age": age,
+        "grade":grade
+
+    }
+    students.append(newStudents)
+    return newStudents
+
+
+@app.get("/students")
+def Allstudents():
+    return students
+
+@app.get("/students/{student_id}")
+def getStudent(student_id:int):
+    for student in students:
+        if student["student_id"] == student_id:
+            return student
+#* PUT /students/{student_id}: Update a student's details.
+@app.put("/students/{student_id}")
+def recordUpdate(student_id:int, name:str, age:int, grade:str):
+    for student in students:
+        if student["student_id"] == student_id:
+            student["name"]=name
+            student["age"]=age
+            student["grade"]=grade
+            return student
+            
 
 
 
